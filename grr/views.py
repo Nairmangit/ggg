@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from collections import OrderedDict
 from .models import obj, sens, values_sens
 from .forms import LogForm, Form
-import datetime, requests
+import datetime
 
 # Create your views here.
 def index(request):
