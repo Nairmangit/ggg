@@ -4,10 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from collections import OrderedDict
 from .models import obj, sens, values_sens
 from .forms import LogForm, Form
-from .fusioncharts import FusionCharts
-from .fusioncharts import FusionTable
-from .fusioncharts import TimeSeries
-import datetime, qsstats, requests
+import datetime, requests
 
 # Create your views here.
 def index(request):
@@ -61,8 +58,6 @@ def grath(request, sensid):
     #values = qss.time_series(seven_days_ago, today, interval = 'days')
     #values = [(test.dat, int(test.tem)) for test in qwe]
     context =  {'values_x' : values_x, 'values_y' : values_y}
-    for val in values_x:
-        print(val)
     return render(request, 'grr/googletemp.html', context)
 
 def timech(request, sensid):
