@@ -15,8 +15,19 @@ def index(request):
 def lk(request):
     obj_list = obj.objects.all()
     sens_list = sens.objects.all()
+    values_list = values_sens.objects.all()
+    #values_list = values_sens.objects.filter('sensfk' = sens_list)
+    print(values_list)
+    tp = [sens_list[0].type]
+    ln = []
+    for senss in sens_list:
+        ch = False
+        for i in tp:
+            if i == senss.type:
+                ch = True
+        if ch != True: tp.append(senss.type)
     form = Form()
-    context =  {'obj_list' : obj_list, 'sens_list' : sens_list, 'form' : form}
+    context =  {'obj_list' : obj_list, 'sens_list' : sens_list,'values_list' : values_list, 'form' : form, 'tp' : tp}
     return render(request, 'grr/lk.html', context)
 
 @require_POST
@@ -61,8 +72,10 @@ def grath(request, sensid):
     return render(request, 'grr/googletemp.html', context)
 
 def timech(request, sensid):
+    values_list = values_sens.objects.all()
+    values_list = values_list.filter(sensfk = sensid)
     form = Form()
-    context =  {'form' : form, 'sensid' : sensid}
+    context =  {'form' : form, 'sensid' : sensid, 'values_list' : values_list}
     return render(request, 'grr/timech.html', context)
 
 def grathtime(request, sensid):
