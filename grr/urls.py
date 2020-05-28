@@ -9,4 +9,5 @@ urlpatterns = [
     path('grath/<sensid>', views.grath, name = 'grath'),
     path('timech/<sensid>', views.timech, name = 'timech'),
     path('grathtime/<sensid>', views.grathtime, name = 'grathtime'),
+    path('send', views.send, name = 'send'),
 ]

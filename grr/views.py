@@ -17,7 +17,7 @@ def lk(request):
     sens_list = sens.objects.all()
     values_list = values_sens.objects.all()
     #values_list = values_sens.objects.filter('sensfk' = sens_list)
-    print(values_list)
+    #print(values_list)
     tp = [sens_list[0].type]
     ln = []
     for senss in sens_list:
@@ -29,17 +29,6 @@ def lk(request):
     form = Form()
     context =  {'obj_list' : obj_list, 'sens_list' : sens_list,'values_list' : values_list, 'form' : form, 'tp' : tp}
     return render(request, 'grr/lk.html', context)
-
-@require_POST
-
-def logg (request):
-    username = request.POST['login']
-    password = request.POST['password']
-    user = authenticate(username=username, password=password)
-    return redirect('lk')
-
-def loggout (request):
-    return redirect('index')
 
 def grath(request, sensid):
     #time = datetime.datetime.strptime(request.POST['date'], '%Y-%m-%d').date()
@@ -89,5 +78,20 @@ def grathtime(request, sensid):
     context =  {'values' : values}
     return render(request, 'grr/googletemp.html', context)
 
-class Vall:
-    vv = ''
+@require_POST
+def logg (request):
+    username = request.POST['login']
+    password = request.POST['password']
+    user = authenticate(username=username, password=password)
+    return redirect('lk')
+
+def send(request):
+    mod = values_sens()
+    mod.tem = float(request.POST['tem'])
+    mod.dat = datetime.datetime.now()
+    mod.sensfk = sens.objects.get(id=request.POST['sensfk'])
+    mod.save()
+    return redirect('index')
+
+def loggout (request):
+    return redirect('index')
