@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login, logout
 from collections import OrderedDict
 from .models import obj, sens, values_sens
@@ -84,7 +85,8 @@ def logg (request):
     password = request.POST['password']
     user = authenticate(username=username, password=password)
     return redirect('lk')
-
+    
+@csrf_exempt
 def send(request):
     mod = values_sens()
     mod.tem = float(request.POST['tem'])
